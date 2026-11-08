@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bandaru Revanth — High-Performance Systems &amp; AI Engineer</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Google Fonts: Rajdhani, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            rajdhani: ['Rajdhani', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            f1red: '#E60000',
+            f1crimson: '#FF1A1A',
+            charcoal: '#0A0A0A',
+            titanium: '#1C1C1E',
+            gunmetal: '#141416',
+            amberGlow: '#FF9900',
+          },
+          animation: {
+            'grid-pan': 'gridPan 18s linear infinite',
+            'float-slow': 'floatSlow 6s ease-in-out infinite',
+            'float-lag': 'floatSlow 7s ease-in-out infinite 1.5s',
+            'pulse-subtle': 'pulseSubtle 3s ease-in-out infinite',
+            'tach-scan': 'tachScan 3s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+          },
+          keyframes: {
+            gridPan: {
+              '0%': { backgroundPosition: '0px 0px, 0px 0px' },
+              '100%': { backgroundPosition: '100px 100px, 50px 50px' }
+            },
+            floatSlow: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulseSubtle: {
+              '0%, 100%': { opacity: '0.9', boxShadow: '0 0 15px rgba(230, 0, 0, 0.25)' },
+              '50%': { opacity: '1', boxShadow: '0 0 25px rgba(230, 0, 0, 0.55)' },
+            },
+            tachScan: {
+              '0%': { width: '12%' },
+              '50%': { width: '84%' },
+              '100%': { width: '12%' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="carbon-bg text-gray-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-red-600 selection:text-white flex flex-col justify-between">
+  <!-- Ambient Light Bar & Speed Canvas Effect -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-40 left-1/4 w-[600px] h-[350px] bg-red-600/10 rounded-full blur-[140px]"></div>
+    <div class="absolute top-1/2 -right-20 w-[550px] h-[550px] bg-red-700/10 rounded-full blur-[150px]"></div>
+    <div class="absolute inset-0 speed-grid opacity-35"></div>
+  </div>
+
+  <!-- Main Viewport Container -->
+  <div class="relative z-10 min-h-screen flex flex-col justify-between max-w-[1540px] w-full mx-auto px-6 sm:px-10 lg:px-14 py-6">
+    <!-- ==================== TOP NAVIGATION BAR ==================== -->
+    <header class="flex items-center justify-between w-full pt-2 pb-6 border-b border-gray-800/60 gap-4">
+      <!-- Left Logo: Sleek aerodynamic branding + Revanth Portrait -->
+      <a class="group flex items-center space-x-3 focus:outline-none" href="#" onclick="switchMainView('projects'); return false;">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-titanium to-charcoal border border-red-500/60 flex items-center justify-center shadow-lg group-hover:border-red-500 transition-colors duration-300 overflow-hidden relative">
+          <img
+            src="revanth.jpg"
+            alt="Bandaru Revanth"
+            class="w-full h-full object-cover object-[center_42%] group-hover:scale-105 transition-transform"
+          />
+        </div>
+        <div class="flex flex-col">
+          <span class="font-rajdhani text-2xl font-bold tracking-wider text-white uppercase flex items-center gap-1.5">
+            REVANTH
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-f1red animate-ping"></span>
+          </span>
+          <span class="font-mono text-[9px] uppercase tracking-widest text-gray-400 -mt-1 group-hover:text-red-400 transition-colors">
+            BANDARU // AI ORCHESTRATOR
+          </span>
+        </div>
+      </a>
+
+      <!-- Center: Pill-shaped smoked-glass navigation bar -->
+      <nav class="hidden md:flex items-center smoked-glass px-7 py-2 rounded-full border border-gray-500/20 shadow-2xl relative">
+        <div class="flex items-center space-x-8 font-rajdhani text-sm font-semibold tracking-wider uppercase text-gray-300">
+          <button class="nav-btn active text-white hover:text-f1red transition-colors duration-200 py-1 cursor-pointer" id="navBtn-projects" onclick="switchMainView('projects')">Projects</button>
+          <button class="nav-btn text-gray-400 hover:text-f1red transition-colors duration-200 py-1 cursor-pointer" id="navBtn-skills" onclick="switchMainView('skills')">Skills</button>
+          <button class="nav-btn text-gray-400 hover:text-f1red transition-colors duration-200 py-1 cursor-pointer" id="navBtn-hackathons" onclick="switchMainView('hackathons')">Hackathons</button>
+          <button class="nav-btn text-gray-400 hover:text-f1red transition-colors duration-200 py-1 cursor-pointer" id="navBtn-about" onclick="switchMainView('about')">About</button>
+        </div>
+      </nav>
+
+      <!-- Right: LinkedIn Badge, Status & Glowing Red Border Action Button -->
+      <div class="flex items-center space-x-3">
+        <div class="hidden xl:flex items-center space-x-2 text-[11px] font-mono text-gray-400 px-3 py-1.5 rounded-md bg-black/40 border border-gray-800">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>SYSTEM: OPTIMAL</span>
+        </div>
+        <a
+          href="https://www.linkedin.com/in/revanth-bandaru-470876432/"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Bandaru Revanth on LinkedIn"
+          class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full smoked-glass border border-gray-700/70 hover:border-f1red text-gray-300 hover:text-white font-mono text-xs transition-all"
+        >
+          <svg class="w-3.5 h-3.5 text-f1red shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+          </svg>
+          <span class="hidden lg:inline">LINKEDIN</span>
+        </a>
+        <button
+          class="relative group inline-flex items-center justify-center px-6 py-2.5 rounded-full font-rajdhani font-bold text-sm tracking-wider uppercase text-white bg-gradient-to-r from-gunmetal to-titanium border border-f1red/80 shadow-[0_0_15px_rgba(230,0,0,0.35)] hover:shadow-[0_0_25px_rgba(230,0,0,0.7)] hover:border-red-500 transition-all duration-300 overflow-hidden cursor-pointer"
+          onclick="openContactModal()"
+        >
+          <span class="absolute inset-0 bg-gradient-to-r from-red-600/20 to-red-800/10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+          <span class="relative z-10 flex items-center space-x-2">
+            <span>Contact Me</span>
+            <i class="w-4 h-4 text-f1red group-hover:translate-x-1 transition-transform" data-lucide="chevron-right"></i>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Bar -->
+    <div class="flex md:hidden items-center justify-around smoked-glass px-3 py-2 rounded-xl my-3 border border-gray-800">
+      <button id="mobNavBtn-projects" onclick="switchMainView('projects')" class="font-rajdhani text-xs font-bold uppercase px-3 py-1 rounded-lg bg-red-600/20 text-white border border-f1red">Projects</button>
+      <button id="mobNavBtn-skills" onclick="switchMainView('skills')" class="font-rajdhani text-xs font-bold uppercase px-3 py-1 rounded-lg text-gray-400">Skills</button>
+      <button id="mobNavBtn-hackathons" onclick="switchMainView('hackathons')" class="font-rajdhani text-xs font-bold uppercase px-3 py-1 rounded-lg text-gray-400">Hackathons</button>
+      <button id="mobNavBtn-about" onclick="switchMainView('about')" class="font-rajdhani text-xs font-bold uppercase px-3 py-1 rounded-lg text-gray-400">About</button>
+    </div>
+
+    <!-- ==================== VIEW 1: PROJECTS & HERO VIEW ==================== -->
+    <main class="view-section view-active my-auto py-6" id="view-projects">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-12 items-center">
+        <!-- ================= LEFT COLUMN: HERO CONTENT ================= -->
+        <section class="lg:col-span-7 flex flex-col justify-center space-y-7 xl:pr-6">
+          <!-- Telemetry Status Tag -->
+          <div class="inline-flex flex-wrap items-center gap-3 w-fit">
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full smoked-glass border border-red-500/40 text-xs font-mono text-gray-300">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-f1red"></span>
+              </span>
+              <span class="font-bold text-white tracking-wider">F1 PIT-LANE PRECISION</span>
+              <span class="text-gray-500">|</span>
+              <span class="text-gray-400">STATUS: BUILD READY</span>
+            </div>
+            <div class="hidden sm:flex items-center gap-1 font-mono text-[10px] text-gray-400 px-2.5 py-1 rounded bg-black/50 border border-gray-800">
+              <span class="text-red-500 font-bold">RPM</span>
+              <span class="w-12 h-1.5 bg-gray-800 rounded-sm overflow-hidden flex">
+                <span class="h-full bg-red-600 animate-tach-scan"></span>
+              </span>
+              <span class="text-white">12.5k</span>
+            </div>
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="font-rajdhani text-4xl sm:text-6xl xl:text-7xl font-bold leading-[1.02] tracking-tight text-white uppercase">
+            Architecting <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400">high-performance</span> systems.
+            <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-f1red via-red-500 to-amberGlow">
+              Engineering code
+            </span>
+            <span class="text-white">that matters.</span>
+          </h1>
+
+          <!-- Sub-headline -->
+          <p class="font-sans text-base sm:text-lg text-gray-300/90 max-w-2xl font-normal leading-relaxed border-l-2 border-f1red/80 pl-4 py-0.5">
+            CS undergraduate at <strong class="text-white font-medium">GVP College of Engineering</strong> building at the edge of systems engineering, Linux workflows, and practical AI automation.
+          </p>
+
+          <!-- CTA row with Quick Action, GitHub, LinkedIn, LeetCode & CodeChef badges -->
+          <div class="flex flex-wrap items-center gap-2.5 pt-1">
+            <button
+              id="exploreEngBtn"
+              class="px-6 py-3 rounded-xl bg-gradient-to-r from-f1red to-red-700 text-white font-rajdhani font-bold text-base tracking-wider uppercase shadow-[0_0_20px_rgba(230,0,0,0.45)] hover:shadow-[0_0_30px_rgba(230,0,0,0.7)] hover:from-red-600 hover:to-red-800 transition-all duration-300 flex items-center gap-2 cursor-pointer"
+              onclick="triggerEngineeringTelemetryDeck()"
+            >
+              <i class="w-4 h-4" data-lucide="cpu"></i>
+              <span id="exploreEngBtnText">Explore Engineering Work</span>
+              <i class="w-4 h-4" data-lucide="arrow-down-right"></i>
+            </button>
+            <a
+              class="px-4 py-3 rounded-xl smoked-glass hover:bg-black/60 border border-gray-700/60 hover:border-gray-500 text-gray-300 hover:text-white font-mono text-xs tracking-wider uppercase transition-all duration-300 flex items-center gap-2"
+              href="https://github.com/revanthbandaru54-arch"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <svg class="w-4 h-4 text-red-500 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
+              <span>GitHub</span>
+            </a>
+            <a
+              class="px-4 py-3 rounded-xl smoked-glass hover:bg-black/60 border border-gray-700/60 hover:border-f1red text-gray-300 hover:text-white font-mono text-xs tracking-wider uppercase transition-all duration-300 flex items-center gap-2"
+              href="https://www.linkedin.com/in/revanth-bandaru-470876432/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <svg class="w-4 h-4 text-amberGlow shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+            <a
+              class="px-4 py-3 rounded-xl smoked-glass hover:bg-black/60 border border-amber-500/40 hover:border-amber-400 text-gray-300 hover:text-amber-300 font-mono text-xs tracking-wider uppercase transition-all duration-300 flex items-center gap-2"
+              href="https://leetcode.com/u/revanthbandaru54/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <i class="w-4 h-4 text-amber-400" data-lucide="code-2"></i>
+              <span>LeetCode</span>
+            </a>
+            <a
+              class="px-4 py-3 rounded-xl smoked-glass hover:bg-black/60 border border-emerald-500/40 hover:border-emerald-400 text-gray-300 hover:text-emerald-300 font-mono text-xs tracking-wider uppercase transition-all duration-300 flex items-center gap-2"
+              href="https://www.codechef.com/users/husk_calm_81"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <i class="w-4 h-4 text-emerald-400" data-lucide="terminal"></i>
+              <span>CodeChef</span>
+            </a>
+          </div>
+
+          <!-- ================= INTERACTIVE ENGINEERING WORKBENCH & CP TELEMETRY DECK ================= -->
+          <div id="engineeringWorkDeck" class="smoked-card rounded-2xl p-4 sm:p-5 border border-red-500/40 relative overflow-hidden transition-all duration-300">
+            <div class="absolute -top-[1px] left-0 right-[35%] h-[2px] bg-gradient-to-r from-f1red via-amberGlow to-transparent pointer-events-none"></div>
+
+            <!-- Deck Top Header & Interactive Mode Switcher -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 mb-3.5 border-b border-gray-800/90">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-f1red animate-ping"></span>
+                <span class="font-mono text-[10px] uppercase tracking-widest text-red-400 font-bold">
+                  ENGINEERING WORKBENCH // LIVE EXECUTION &amp; DSA TELEMETRY
+                </span>
+              </div>
+              <div class="flex items-center gap-1 bg-black/70 p-1 rounded-lg border border-gray-800 font-mono text-[10px]">
+                <button
+                  type="button"
+                  id="deckTabBtn-cp"
+                  onclick="switchWorkbenchTab('cp')"
+                  class="px-2.5 py-1 rounded bg-red-600/25 border border-red-500/70 text-white font-bold cursor-pointer transition-all"
+                >
+                  01 // DSA &amp; CP ARENA
+                </button>
+                <button
+                  type="button"
+                  id="deckTabBtn-systems"
+                  onclick="switchWorkbenchTab('systems')"
+                  class="px-2.5 py-1 rounded text-gray-400 hover:text-white border border-transparent cursor-pointer transition-all"
+                >
+                  02 // PIPELINE BENCH
+                </button>
+                <button
+                  type="button"
+                  id="deckTabBtn-sim"
+                  onclick="switchWorkbenchTab('sim')"
+                  class="px-2.5 py-1 rounded text-gray-400 hover:text-white border border-transparent cursor-pointer transition-all"
+                >
+                  03 // COMPLEXITY LAB
+                </button>
+              </div>
+            </div>
+
+            <!-- DECK MODE 1: COMPETITIVE PROGRAMMING & ALGORITHMIC PROFILES (LEETCODE + CODECHEF) -->
+            <div id="deckPanel-cp" class="space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- LeetCode Profile Card -->
+                <a
+                  href="https://leetcode.com/u/revanthbandaru54/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group p-3.5 rounded-xl bg-black/65 border border-gray-800 hover:border-amber-500/70 transition-all duration-200 flex flex-col justify-between"
+                >
+                  <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
+                        <i class="w-4 h-4" data-lucide="code-2"></i>
+                      </div>
+                      <div>
+                        <div class="font-rajdhani font-bold text-base text-white group-hover:text-amber-300 transition-colors uppercase flex items-center gap-1.5">
+                          <span>LeetCode</span>
+                          <span class="font-mono text-[9px] px-1.5 py-0.2 rounded bg-amber-950/80 text-amber-300 border border-amber-700/50">ACTIVE</span>
+                        </div>
+                        <div class="font-mono text-[10px] text-gray-400">u/revanthbandaru54</div>
+                      </div>
+                    </div>
+                    <i class="w-4 h-4 text-gray-500 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" data-lucide="arrow-up-right"></i>
+                  </div>
+                  <div class="text-[11px] font-sans text-gray-300 leading-snug mb-2.5">
+                    Algorithmic problem solving in <strong class="text-white">C++ STL &amp; Python</strong> — Arrays, Trees, Graphs, Dynamic Programming &amp; Sliding Window patterns.
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-gray-800/80 font-mono text-[10px]">
+                    <span class="text-amber-400">RUNTIME: C++20 / O(1) AUX</span>
+                    <span class="text-gray-400 group-hover:text-white">OPEN PROFILE -&gt;</span>
+                  </div>
+                </a>
+
+                <!-- CodeChef Profile Card -->
+                <a
+                  href="https://www.codechef.com/users/husk_calm_81"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group p-3.5 rounded-xl bg-black/65 border border-gray-800 hover:border-emerald-500/70 transition-all duration-200 flex flex-col justify-between"
+                >
+                  <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                        <i class="w-4 h-4" data-lucide="terminal"></i>
+                      </div>
+                      <div>
+                        <div class="font-rajdhani font-bold text-base text-white group-hover:text-emerald-300 transition-colors uppercase flex items-center gap-1.5">
+                          <span>CodeChef</span>
+                          <span class="font-mono text-[9px] px-1.5 py-0.2 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-700/50">CONTESTS</span>
+                        </div>
+                        <div class="font-mono text-[10px] text-gray-400">users/husk_calm_81</div>
+                      </div>
+                    </div>
+                    <i class="w-4 h-4 text-gray-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" data-lucide="arrow-up-right"></i>
+                  </div>
+                  <div class="text-[11px] font-sans text-gray-300 leading-snug mb-2.5">
+                    Timed competitive programming sprints — Number Theory, Greedy heuristics, Bit Manipulation &amp; fast I/O under strict time limits.
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-gray-800/80 font-mono text-[10px]">
+                    <span class="text-emerald-400">HANDLE: HUSK_CALM_81</span>
+                    <span class="text-gray-400 group-hover:text-white">OPEN PROFILE -&gt;</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- DECK MODE 2: LIVE SYSTEM PIPELINE BENCHMARK -->
+            <div id="deckPanel-systems" class="hidden space-y-2.5 font-mono text-[11px]">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div class="p-3 rounded-xl bg-black/70 border border-gray-800 space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-amber-400 font-bold">DHWANIDRISHTI ENGINE</span>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-700/50">30+ FPS WASM</span>
+                  </div>
+                  <div class="text-[10px] text-gray-300 font-sans">
+                    543-Pt MediaPipe Holistic + NIOS 230 SVO➔ISL SOV Parser + Sakoe-Chiba DTW (<code class="text-amber-300">r=8</code>) STEM Coach.
+                  </div>
+                  <div class="flex items-center justify-between pt-1">
+                    <button type="button" onclick="switchMainView('hackathons')" class="text-[10px] text-amber-400 hover:text-white underline cursor-pointer">Launch Live ISL Lab -&gt;</button>
+                    <a href="https://dhwani-drishti.vercel.app" target="_blank" rel="noopener noreferrer" class="text-[10px] text-emerald-400 hover:text-white">Live Deployment ↗</a>
+                  </div>
+                </div>
+                <div class="p-3 rounded-xl bg-black/70 border border-gray-800 space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-red-400 font-bold">DISTRO-AI PIPELINE</span>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-950/80 text-red-300 border border-red-700/50">VOICE-TO-ERP</span>
+                  </div>
+                  <div class="text-[10px] text-gray-300 font-sans">
+                    Whisper speech stream parsing ➔ Deterministic JSON entity extraction ➔ Automated GST ledger &amp; route dispatch.
+                  </div>
+                  <div class="flex items-center justify-between pt-1">
+                    <button type="button" onclick="switchTelemetryTab('projects'); toggleDistroArch();" class="text-[10px] text-red-400 hover:text-white underline cursor-pointer">Inspect ERP Pipeline -&gt;</button>
+                    <span class="text-[10px] text-gray-400">FastAPI + Local LLM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- DECK MODE 3: INTERACTIVE ALGORITHMIC COMPLEXITY LAB -->
+            <div id="deckPanel-sim" class="hidden space-y-2.5 font-mono text-[10px]">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="text-gray-400">SELECT KERNEL BENCHMARK TO TRACE:</span>
+                <div class="flex flex-wrap gap-1.5">
+                  <button type="button" id="algoBtn-0" onclick="runAlgoTrace(0)" class="px-2 py-0.5 rounded border bg-red-950/80 border-red-600 text-white cursor-pointer">C++ STL Priority Graph</button>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-black/80 border border-gray-800 space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span id="algoTraceTitle" class="text-amber-300 font-bold">KERNEL: C++20 STL Priority Graph &amp; Sliding Window</span>
+                  <span id="algoTraceComplexity" class="text-emerald-400 font-bold">TIME: O(E log V) | ZERO ALLOC</span>
+                </div>
+                <p id="algoTraceDesc" class="font-sans text-xs text-gray-300">
+                  Cache-friendly adjacency vectors and monotonic deque structures used in competitive programming sprints on LeetCode and CodeChef.
+                </p>
+                <div class="w-full bg-gray-900 h-1.5 rounded-full overflow-hidden border border-gray-800">
+                  <div id="algoTraceBar" class="h-full bg-gradient-to-r from-f1red via-amberGlow to-emerald-400 transition-all duration-300" style="width: 92%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= BOTTOM LEFT FEATURE ROW: 4 Gauge-like Icons ================= -->
+          <div class="pt-3">
+            <div class="text-[11px] font-mono uppercase tracking-widest text-gray-500 mb-3 flex items-center gap-2">
+              <i class="w-3.5 h-3.5 text-f1red" data-lucide="activity"></i>
+              <span>Telemetry Gauges &amp; Quick Route Navigation</span>
+              <span class="h-[1px] flex-1 bg-gradient-to-r from-gray-700/60 to-transparent"></span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <!-- Gauge 1: C++ & Python -> routes to Skills -->
+              <button class="text-left group smoked-card p-3.5 rounded-xl border border-gray-700/40 relative overflow-hidden transition-all duration-200 hover:border-red-500 cursor-pointer" onclick="switchMainView('skills')">
+                <div class="absolute top-0 right-0 w-8 h-8 bg-red-600/5 rounded-bl-full pointer-events-none group-hover:bg-red-600/20 transition-colors"></div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-black/60 border border-gray-700/70 flex items-center justify-center text-f1red group-hover:scale-110 group-hover:border-red-500 transition-all duration-200">
+                    <i class="w-4 h-4" data-lucide="code-2"></i>
+                  </div>
+                  <span class="font-mono text-[9px] text-gray-400">SKILLS // 01</span>
+                </div>
+                <div class="font-rajdhani font-bold text-sm tracking-wide text-white group-hover:text-red-400 transition-colors">C++ &amp; Python</div>
+                <div class="font-mono text-[10px] text-gray-400 mt-0.5 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-f1red"></span>
+                  <span>FastAPI &amp; Systems</span>
+                </div>
+              </button>
+
+              <!-- Gauge 2: Local LLM Dev -> routes to Skills -->
+              <button class="text-left group smoked-card p-3.5 rounded-xl border border-gray-700/40 relative overflow-hidden transition-all duration-200 hover:border-amber-500 cursor-pointer" onclick="switchMainView('skills')">
+                <div class="absolute top-0 right-0 w-8 h-8 bg-red-600/5 rounded-bl-full pointer-events-none group-hover:bg-amber-600/20 transition-colors"></div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-black/60 border border-gray-700/70 flex items-center justify-center text-amberGlow group-hover:scale-110 group-hover:border-amber-500 transition-all duration-200">
+                    <i class="w-4 h-4" data-lucide="cpu"></i>
+                  </div>
+                  <span class="font-mono text-[9px] text-gray-400">SKILLS // 02</span>
+                </div>
+                <div class="font-rajdhani font-bold text-sm tracking-wide text-white group-hover:text-amber-400 transition-colors">Local LLM Dev</div>
+                <div class="font-mono text-[10px] text-gray-400 mt-0.5 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amberGlow"></span>
+                  <span>Edge Inference</span>
+                </div>
+              </button>
+
+              <!-- Gauge 3: Linux Workflow -> routes to Skills -->
+              <button class="text-left group smoked-card p-3.5 rounded-xl border border-gray-700/40 relative overflow-hidden transition-all duration-200 hover:border-red-500 cursor-pointer" onclick="switchMainView('skills')">
+                <div class="absolute top-0 right-0 w-8 h-8 bg-red-600/5 rounded-bl-full pointer-events-none group-hover:bg-red-600/20 transition-colors"></div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-black/60 border border-gray-700/70 flex items-center justify-center text-f1red group-hover:scale-110 group-hover:border-red-500 transition-all duration-200">
+                    <i class="w-4 h-4" data-lucide="terminal"></i>
+                  </div>
+                  <span class="font-mono text-[9px] text-gray-400">SKILLS // 03</span>
+                </div>
+                <div class="font-rajdhani font-bold text-sm tracking-wide text-white group-hover:text-red-400 transition-colors">Linux Workflow</div>
+                <div class="font-mono text-[10px] text-gray-400 mt-0.5 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-f1red"></span>
+                  <span>Arch / CLI Tools</span>
+                </div>
+              </button>
+
+              <!-- Gauge 4: Visakhapatnam -> routes to About -->
+              <button class="text-left group smoked-card p-3.5 rounded-xl border border-gray-700/40 relative overflow-hidden transition-all duration-200 hover:border-emerald-500 cursor-pointer" onclick="switchMainView('about')">
+                <div class="absolute top-0 right-0 w-8 h-8 bg-emerald-600/5 rounded-bl-full pointer-events-none group-hover:bg-emerald-600/20 transition-colors"></div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-black/60 border border-gray-700/70 flex items-center justify-center text-emerald-400 group-hover:scale-110 group-hover:border-emerald-500 transition-all duration-200">
+                    <i class="w-4 h-4" data-lucide="map-pin"></i>
+                  </div>
+                  <span class="font-mono text-[9px] text-gray-400">ABOUT // 04</span>
+                </div>
+                <div class="font-rajdhani font-bold text-sm tracking-wide text-white group-hover:text-emerald-400 transition-colors">Visakhapatnam</div>
+                <div class="font-mono text-[10px] text-gray-400 mt-0.5 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  <span>AP, India // GVPCE</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= RIGHT COLUMN: INTERACTIVE F1 TELEMETRY TABBED SHOWCASE ================= -->
+        <section class="lg:col-span-5 relative flex flex-col items-center justify-center py-4" id="telemetryProjectConsole">
+          <div class="absolute -inset-4 border border-dashed border-gray-800/80 rounded-3xl pointer-events-none -z-10"></div>
+
+          <div class="w-full flex items-center justify-between mb-3 px-1">
+            <div class="font-mono text-[9px] text-gray-500 tracking-widest uppercase flex items-center gap-1.5">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-f1red"></span>
+              <span>CHASSIS: REVANTH-R1</span>
+              <span class="text-gray-700">//</span>
+              <span class="text-gray-400" id="telemetryFeedLabel">FEED 01/02</span>
+            </div>
+            <div class="font-mono text-[9px] text-gray-400 flex items-center gap-1.5 bg-black/50 px-2 py-0.5 rounded border border-gray-800/80">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="gearSyncLabel">SYNC: CHANNEL 01</span>
+            </div>
+          </div>
+
+          <div class="w-full max-w-lg space-y-3 relative">
+            <!-- Filter pills for quick focus -->
+            <div class="flex items-center gap-2 px-1">
+              <span class="font-mono text-[10px] text-gray-500 uppercase">CATEGORY:</span>
+              <button class="px-2.5 py-0.5 rounded text-[10px] font-mono bg-red-950/70 border border-red-800 text-red-300 cursor-pointer" id="filterBtn-all" onclick="filterProjects('all')">ALL</button>
+              <button class="px-2.5 py-0.5 rounded text-[10px] font-mono bg-black/50 border border-gray-800 text-gray-400 hover:text-white cursor-pointer" id="filterBtn-ai" onclick="filterProjects('ai')">AI AUTOMATION</button>
+              <button class="px-2.5 py-0.5 rounded text-[10px] font-mono bg-black/50 border border-gray-800 text-gray-400 hover:text-white cursor-pointer" id="filterBtn-systems" onclick="filterProjects('systems')">SYSTEMS</button>
+            </div>
+
+            <!-- ================= TELEMETRY TAB BAR (PROJECTS vs HACKATHONS) ================= -->
+            <div class="smoked-glass p-1.5 rounded-xl border border-gray-700/60 shadow-xl flex items-center gap-1.5 relative">
+              <!-- Tab 1: Active Projects -->
+              <button
+                aria-selected="true"
+                class="telemetry-tab-btn flex-1 py-2.5 px-3 rounded-lg font-rajdhani font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2 relative bg-gradient-to-r from-red-600/20 via-red-950/40 to-transparent border border-red-500/70 text-white shadow-[0_0_15px_rgba(230,0,0,0.25)] cursor-pointer"
+                id="tabBtn-projects"
+                onclick="switchTelemetryTab('projects')"
+              >
+                <span class="w-2 h-2 rounded-full bg-f1red shadow-[0_0_8px_#ff1a1a]"></span>
+                <span>ACTIVE PROJECTS</span>
+                <span class="font-mono text-[10px] text-red-400 bg-black/60 px-1.5 py-0.2 rounded border border-red-900/50">(01)</span>
+                <span class="active-indicator absolute bottom-0 left-3 right-3 h-[2px] bg-f1red shadow-[0_0_8px_#ff1a1a]"></span>
+              </button>
+
+              <!-- Tab 2: Hackathon Builds -->
+              <button
+                aria-selected="false"
+                class="telemetry-tab-btn flex-1 py-2.5 px-3 rounded-lg font-rajdhani font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2 relative text-gray-400 hover:text-white hover:bg-white/5 border border-transparent cursor-pointer"
+                id="tabBtn-hackathons"
+                onclick="switchTelemetryTab('hackathons')"
+              >
+                <span class="w-2 h-2 rounded-full bg-gray-600"></span>
+                <span>HACKATHON BUILDS</span>
+                <span class="font-mono text-[10px] text-gray-400 bg-black/60 px-1.5 py-0.2 rounded border border-gray-800">(01)</span>
+                <span class="active-indicator hidden absolute bottom-0 left-3 right-3 h-[2px] bg-f1red shadow-[0_0_8px_#ff1a1a]"></span>
+              </button>
+            </div>
+
+            <!-- ================= TAB CONTENT PANELS ================= -->
+            <div class="relative min-h-[460px]">
+              <!-- ================= PANEL 1: ACTIVE PROJECTS (DistroAI) ================= -->
+              <div class="tab-panel active-tab" id="panel-projects">
+                <div class="smoked-card rounded-2xl p-6 sm:p-7 relative z-20 border border-gray-500/30 group">
+                  <div class="absolute -top-[1px] -left-[1px] right-[40%] h-[2px] bg-gradient-to-r from-red-500 via-white to-transparent rounded-t-2xl pointer-events-none"></div>
+
+                  <div class="flex items-center justify-between pb-4 mb-4 border-b border-gray-800/90">
+                    <div class="flex items-center space-x-2.5">
+                      <span class="w-3 h-3 rounded-full bg-f1red animate-pulse"></span>
+                      <span class="font-mono text-[11px] uppercase tracking-wider text-red-400 font-semibold">PROJECT STREAM 01 // TELEMETRY</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5 font-mono text-[10px] text-gray-400 bg-black/60 px-2 py-0.5 rounded border border-gray-800">
+                      <span class="text-amberGlow">●</span>
+                      <span>STAGE: UNDER DEVELOPMENT</span>
+                    </div>
+                  </div>
+
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between">
+                      <h3 class="font-rajdhani text-3xl font-bold tracking-wide text-white uppercase group-hover:text-red-400 transition-colors">DistroAI</h3>
+                      <span class="px-2.5 py-0.5 rounded text-[10px] font-mono bg-red-950/60 text-red-400 border border-red-800/50">AI AUTOMATION</span>
+                    </div>
+                    <p class="font-sans text-sm text-gray-300 font-medium">Automated AI for Wholesale Distributors</p>
+                  </div>
+
+                  <div class="my-5 p-4 rounded-xl bg-black/50 border border-gray-800/80 space-y-2.5">
+                    <div class="flex items-start gap-2.5 text-xs text-gray-300">
+                      <i class="w-4 h-4 text-f1red shrink-0 mt-0.5" data-lucide="mic"></i>
+                      <div>
+                        <span class="text-white font-medium">Whisper Speech-to-Text:</span>
+                        <span class="text-gray-400"> Real-time vocal order stream parsing for chaotic warehouse floors.</span>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-2.5 text-xs text-gray-300">
+                      <i class="w-4 h-4 text-f1red shrink-0 mt-0.5" data-lucide="trending-up"></i>
+                      <div>
+                        <span class="text-white font-medium">Predictive Analytics:</span>
+                        <span class="text-gray-400"> Stock demand forecasting &amp; bulk distributor route optimization.</span>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-2.5 text-xs text-gray-300">
+                      <i class="w-4 h-4 text-f1red shrink-0 mt-0.5" data-lucide="receipt"></i>
+                      <div>
+                        <span class="text-white font-medium">Automated Invoicing:</span>
+                        <span class="text-gray-400"> Zero-touch ledger generation directly piped to GST compliance.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-4 hidden p-3 rounded-lg bg-black/70 border border-red-900/40 text-[11px] font-mono" id="archDiagramDistro">
+                    <div class="text-red-400 font-bold mb-2 flex items-center justify-between">
+                      <span>SYSTEM PIPELINE ARCHITECTURE</span>
+                      <span class="text-gray-500 text-[10px]">END-TO-END</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center text-[10px]">
+                      <div class="arch-node p-2 rounded">
+                        <div class="text-red-400 font-bold">1. VOCAL STREAM</div>
+                        <div class="text-gray-400">Whisper Local / API</div>
+                      </div>
+                      <div class="arch-node p-2 rounded">
+                        <div class="text-amber-400 font-bold">2. LLM PARSER</div>
+                        <div class="text-gray-400">Structured JSON Extract</div>
+                      </div>
+                      <div class="arch-node p-2 rounded">
+                        <div class="text-emerald-400 font-bold">3. ERP DISPATCH</div>
+                        <div class="text-gray-400">Auto Invoice + DB</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap items-center gap-1.5 mb-5 font-mono text-[10px] text-gray-400">
+                    <span class="px-2 py-0.5 bg-gray-900 border border-gray-700/60 rounded">Python</span>
+                    <span class="px-2 py-0.5 bg-gray-900 border border-gray-700/60 rounded">Whisper API</span>
+                    <span class="px-2 py-0.5 bg-gray-900 border border-gray-700/60 rounded">FastAPI</span>
+                    <span class="px-2 py-0.5 bg-gray-900 border border-gray-700/60 rounded">Local Vector DB</span>
+                  </div>
+
+                  <button
+                    class="w-full py-3 px-5 rounded-xl bg-gradient-to-r from-red-600 via-red-700 to-titanium text-white font-rajdhani font-bold text-sm tracking-wider uppercase shadow-[0_0_18px_rgba(230,0,0,0.4)] hover:shadow-[0_0_28px_rgba(230,0,0,0.7)] border border-red-500/40 hover:border-red-400 transition-all duration-300 flex items-center justify-between group/btn cursor-pointer"
+                    onclick="toggleDistroArch()"
+                  >
+                    <span class="flex items-center gap-2">
+                      <i class="w-4 h-4 text-white" data-lucide="layers"></i>
+                      <span id="archBtnText">View Architecture Telemetry</span>
+                    </span>
+                    <span class="font-mono text-xs group-hover/btn:translate-x-1.5 transition-transform flex items-center">-&gt;</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- ================= PANEL 2: HACKATHON BUILDS (DhwaniDrishti) ================= -->
+              <div class="tab-panel hidden-tab" id="panel-hackathons">
+                <div class="smoked-card rounded-2xl p-6 sm:p-7 relative z-20 border border-gray-500/30 group">
+                  <div class="absolute -top-[1px] -left-[1px] right-[40%] h-[2px] bg-gradient-to-r from-amber-400 via-white to-transparent rounded-t-2xl pointer-events-none"></div>
+
+                  <!-- Header -->
+                  <div class="flex items-center justify-between pb-4 mb-4 border-b border-gray-800">
+                    <div class="flex items-center space-x-2">
+                      <span class="w-3 h-3 rounded-full bg-amberGlow animate-pulse"></span>
+                      <span class="font-mono text-[11px] uppercase tracking-wider text-amber-400 font-semibold">HACKATHON DEPLOYMENT // GVPIHLR</span>
+                    </div>
+                    <div class="flex items-center space-x-2 font-mono text-[10px]">
+                      <span class="text-amber-300 bg-amber-950/70 border border-amber-800/60 px-2 py-0.5 rounded font-bold">TOP 10 FINALIST</span>
+                      <span class="text-gray-400 px-2 py-0.5 bg-black/60 rounded border border-gray-800">24H SPRINT</span>
+                    </div>
+                  </div>
+
+                  <!-- Content -->
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between">
+                      <h4 class="font-rajdhani text-3xl font-bold tracking-wide text-white uppercase group-hover:text-red-400 transition-colors">
+                        DhwaniDrishti
+                      </h4>
+                      <span class="px-2.5 py-0.5 rounded text-[10px] font-mono bg-amber-950/50 text-amber-300 border border-amber-800/40">
+                        ISL &amp; STEM COACH
+                      </span>
+                    </div>
+                    <p class="font-sans text-sm text-gray-300 font-medium">
+                      Real-Time Bi-Directional Indian Sign Language Translation &amp; STEM Tutor
+                    </p>
+                  </div>
+
+                  <!-- Details spec grid (from DhwaniDrishti GitHub repo) -->
+                  <div class="my-5 p-4 rounded-xl bg-black/50 border border-gray-800/80 space-y-2.5">
+                    <div class="flex items-start gap-2.5 text-xs text-gray-300">
+                      <i class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" data-lucide="sparkles"></i>
+                      <div>
+                        <span class="text-white font-medium">LectureCast Engine:</span>
+                        <span class="text-gray-400"> Multilingual (EN/TE/HI) SVO-to-ISL SOV parser &amp; 48-bone 3D avatar signer.</span>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-2.5 text-xs text-gray-300">
+                      <i class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" data-lucide="eye"></i>
+                      <div>
+                        <span class="text-white font-medium">DoubtDesk Vision:</span>
+                        <span class="text-gray-400"> 543-landmark MediaPipe Holistic tracking @ 30+ FPS with 1D-CNN + Bi-LSTM.</span>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-2.5 text-xs text-gray-300">
+                      <i class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" data-lucide="activity"></i>
+                      <div>
+                        <span class="text-white font-medium">ISL-STEM Coach:</span>
+                        <span class="text-gray-400"> Sakoe-Chiba Dynamic Time Warping (DTW) &amp; Vector Cosine joint evaluation.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Metrics bar -->
+                  <div class="mb-5 grid grid-cols-2 gap-2.5 text-[11px] font-mono">
+                    <div class="bg-black/60 p-2.5 rounded-lg border border-gray-800/80">
+                      <div class="text-gray-400 text-[10px] uppercase">HOLISTIC TRACKING</div>
+                      <div class="text-white font-bold text-xs mt-0.5"><span class="text-f1red font-bold">543-Pt</span> @ 30+ FPS</div>
+                    </div>
+                    <div class="bg-black/60 p-2.5 rounded-lg border border-gray-800/80">
+                      <div class="text-gray-400 text-[10px] uppercase">BIOMECHANICAL RIG</div>
+                      <div class="text-white font-bold text-xs mt-0.5">48-Bone 3D + DTW</div>
+                    </div>
+                  </div>
+
+                  <!-- Tech Badges -->
+                  <div class="flex flex-wrap items-center gap-1.5 mb-5 font-mono text-[10px] text-gray-400">
+                    <span class="px-2 py-0.5 bg-gray-900 border border-gray-700/60 rounded">FastAPI</span>
+                    <span class="px-2 py-0.5 bg-gray-900 border border-gray-700/60 rounded">Three.js WebGL</span>
+                    <span class="px-2 py-0.5 bg-gray-900 border border-gray-700/60 rounded">MediaPipe WASM</span>
+                    <span class="px-2 py-0.5 bg-gray-900 border border-gray-700/60 rounded">Sakoe-Chiba DTW</span>
+                  </div>
+
+                  <!-- Actions: Launch Interactive Lab in Hackathons View or View on GitHub -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <button
+                      type="button"
+                      onclick="switchMainView('hackathons')"
+                      class="w-full py-3 px-4 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/60 text-amber-300 hover:text-white font-rajdhani font-bold text-xs tracking-wider uppercase transition-all duration-300 flex items-center justify-between cursor-pointer"
+                    >
+                      <span class="flex items-center gap-1.5">
+                        <i class="w-4 h-4 text-amberGlow" data-lucide="cpu"></i>
+                        <span>Open Live ISL Lab</span>
+                      </span>
+                      <span class="font-mono text-xs">-&gt;</span>
+                    </button>
+                    <a
+                      class="w-full py-3 px-4 rounded-xl bg-titanium/90 hover:bg-black/90 border border-gray-600/70 hover:border-f1red text-gray-200 hover:text-white font-rajdhani font-bold text-xs tracking-wider uppercase transition-all duration-300 flex items-center justify-between group/gh shadow-lg"
+                      href="https://github.com/revanthbandaru54-arch/DhwaniDrishti"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <span class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-f1red shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                        </svg>
+                        <span>View on GitHub</span>
+                      </span>
+                      <span class="font-mono text-xs text-f1red group-hover/gh:translate-x-1 transition-transform">-&gt;</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ==================== VIEW 2: SKILLS TELEMETRY DIAGNOSTIC VIEW ==================== -->
+    <main class="view-section view-hidden py-8" id="view-skills">
+      <div class="max-w-6xl mx-auto space-y-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-800 pb-5 gap-4">
+          <div>
+            <div class="flex items-center gap-2 font-mono text-xs text-red-500 uppercase tracking-widest mb-1">
+              <span class="w-2 h-2 rounded-full bg-f1red animate-ping"></span>
+              DIAGNOSTIC TELEMETRY BENCH // SENSORS CALIBRATED
+            </div>
+            <h2 class="font-rajdhani text-4xl sm:text-5xl font-bold uppercase text-white tracking-wide">
+              TECHNICAL <span class="text-transparent bg-clip-text bg-gradient-to-r from-f1red to-amberGlow">ENGINEERING SPECIFICATIONS</span>
+            </h2>
+            <p class="font-sans text-sm text-gray-400 mt-1">ECU readout of core competencies across low-level architecture, local AI stacks, and infrastructure.</p>
+          </div>
+          <div class="font-mono text-xs px-3 py-1.5 rounded-lg bg-black/60 border border-gray-800 text-gray-300 flex items-center gap-2 self-start md:self-auto">
+            <i class="w-3.5 h-3.5 text-emerald-400" data-lucide="cpu"></i>
+            <span>RUNTIME: OPTIMIZED FOR LINUX &amp; C++</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Category 1 -->
+          <div class="smoked-card p-6 rounded-2xl border border-gray-700/50 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 mb-4 border-b border-gray-800">
+                <span class="font-rajdhani text-lg font-bold uppercase text-white flex items-center gap-2">
+                  <i class="w-5 h-5 text-f1red" data-lucide="binary"></i>
+                  Systems &amp; Low-Level
+                </span>
+                <span class="text-[10px] font-mono bg-red-950/60 text-red-400 border border-red-800/40 px-2 py-0.5 rounded">MOD 01</span>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">C++ (Modern / STL)</span>
+                    <span class="text-red-400">PERFORMANCE</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-red-600 to-red-400 h-full rounded-full" style="width: 92%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">Memory management, data structures &amp; high-throughput algorithmic code.</div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Python (Systems &amp; Async)</span>
+                    <span class="text-red-400">SPEED</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-red-600 to-amberGlow h-full rounded-full" style="width: 95%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">Automation pipelines, asynchronous services, and AI wrappers.</div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Linux Kernel &amp; CLI</span>
+                    <span class="text-red-400">HARDWARE SYNC</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-red-600 to-red-400 h-full rounded-full" style="width: 90%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">Process control, bash scripting, systemd services, Arch/Debian setup.</div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Memory &amp; Concurrency</span>
+                    <span class="text-red-400">EFFICIENCY</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-red-600 to-red-400 h-full rounded-full" style="width: 86%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">Multi-threading, cache awareness, socket programming primitives.</div>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 mt-4 border-t border-gray-800 font-mono text-[10px] text-gray-400 flex items-center justify-between">
+              <span>STATUS: LOW LATENCY</span>
+              <span class="text-emerald-400">VERIFIED</span>
+            </div>
+          </div>
+
+          <!-- Category 2: AI & Automation -->
+          <div class="smoked-card p-6 rounded-2xl border border-gray-700/50 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 mb-4 border-b border-gray-800">
+                <span class="font-rajdhani text-lg font-bold uppercase text-white flex items-center gap-2">
+                  <i class="w-5 h-5 text-amberGlow" data-lucide="sparkles"></i>
+                  AI &amp; Automation
+                </span>
+                <span class="text-[10px] font-mono bg-amber-950/60 text-amber-400 border border-amber-800/40 px-2 py-0.5 rounded">MOD 02</span>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Local LLM Orchestration</span>
+                    <span class="text-amber-400">OFFLINE CAPABLE</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-amber-500 to-red-500 h-full rounded-full" style="width: 94%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">Ollama, vLLM, quantizations (GGUF), LangChain agent orchestration.</div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Whisper Audio Pipelines</span>
+                    <span class="text-amber-400">REAL-TIME</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-amber-500 to-red-500 h-full rounded-full" style="width: 91%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">Real-time speech-to-text inference, acoustic feature extraction.</div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Vector DBs &amp; Embeddings</span>
+                    <span class="text-amber-400">PRECISION</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-amber-500 to-red-500 h-full rounded-full" style="width: 88%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">ChromaDB, FAISS embeddings, hybrid semantic retrieval engines.</div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Edge Inference Optimization</span>
+                    <span class="text-amber-400">COMPACT</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-amber-500 to-red-500 h-full rounded-full" style="width: 89%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">TensorRT / ONNX conversion, minimal latency dispatch loops.</div>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 mt-4 border-t border-gray-800 font-mono text-[10px] text-gray-400 flex items-center justify-between">
+              <span>ZERO CLOUD RELIANCE</span>
+              <span class="text-amber-400">ACTIVE</span>
+            </div>
+          </div>
+
+          <!-- Category 3 -->
+          <div class="smoked-card p-6 rounded-2xl border border-gray-700/50 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 mb-4 border-b border-gray-800">
+                <span class="font-rajdhani text-lg font-bold uppercase text-white flex items-center gap-2">
+                  <i class="w-5 h-5 text-emerald-400" data-lucide="wrench"></i>
+                  Tooling &amp; Infrastructure
+                </span>
+                <span class="text-[10px] font-mono bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 px-2 py-0.5 rounded">MOD 03</span>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">FastAPI &amp; REST/Sockets</span>
+                    <span class="text-emerald-400">RESPONSIVE</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-emerald-500 to-red-500 h-full rounded-full" style="width: 94%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">High-concurrency async endpoints, streaming responses, automated test suites.</div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Git / GitHub Actions CI</span>
+                    <span class="text-emerald-400">WORKFLOW</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-emerald-500 to-red-500 h-full rounded-full" style="width: 96%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">Multi-version Python 3.11–3.13 CI pipelines, PyInstaller `.exe` bundling, Vercel CD.</div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Docker &amp; Isolation</span>
+                    <span class="text-emerald-400">REPRODUCIBLE</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-emerald-500 to-red-500 h-full rounded-full" style="width: 87%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">Multi-stage builds, rootless containers, cross-platform setup scripts.</div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-xs mb-1">
+                    <span class="text-white font-bold">Shell Scripting &amp; Automation</span>
+                    <span class="text-emerald-400">SPEED</span>
+                  </div>
+                  <div class="w-full bg-black/60 rounded-full h-1.5 border border-gray-800 overflow-hidden">
+                    <div class="bg-gradient-to-r from-emerald-500 to-red-500 h-full rounded-full" style="width: 92%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 mt-1 font-sans">Zsh/Bash/PowerShell tooling, dotfiles customization, environment bootstrappers.</div>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 mt-4 border-t border-gray-800 font-mono text-[10px] text-gray-400 flex items-center justify-between">
+              <span>CONFIG: REVANTH-R1</span>
+              <span class="text-white">DETERMINISTIC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between p-4 rounded-xl bg-black/40 border border-gray-800 text-xs font-mono">
+          <div class="flex items-center gap-2 text-gray-400">
+            <i class="w-4 h-4 text-f1red" data-lucide="check-circle-2"></i>
+            <span>ALL STACKS MAINTAINED UNDER RIGOROUS LINUX WORKFLOW BENCHMARKS</span>
+          </div>
+          <button class="text-red-400 hover:text-white transition-colors flex items-center gap-1 font-bold mt-2 sm:mt-0 cursor-pointer" onclick="switchMainView('projects')">
+            <span>&lt;- RETURN TO TELEMETRY CONSOLE</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- ==================== VIEW 3: HACKATHONS SPRINT LOG VIEW ==================== -->
+    <main class="view-section view-hidden py-8" id="view-hackathons">
+      <div class="max-w-6xl mx-auto space-y-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-800 pb-5 gap-4">
+          <div>
+            <div class="flex items-center gap-2 font-mono text-xs text-amber-400 uppercase tracking-widest mb-1">
+              <span class="w-2 h-2 rounded-full bg-amberGlow animate-ping"></span>
+              COMPETITION &amp; SPRINT TELEMETRY // 24-HOUR ENDURANCE
+            </div>
+            <h2 class="font-rajdhani text-4xl sm:text-5xl font-bold uppercase text-white tracking-wide">
+              HACKATHON <span class="text-transparent bg-clip-text bg-gradient-to-r from-amberGlow to-f1red">DEPLOYMENTS</span>
+            </h2>
+            <p class="font-sans text-sm text-gray-400 mt-1">Real-time rapid engineering sprints executed under tight constraints and evaluated by panels.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="px-4 py-2 rounded-xl bg-black/60 border border-gray-800 text-center">
+              <div class="font-rajdhani font-bold text-2xl text-amber-400">TOP 10</div>
+              <div class="font-mono text-[9px] text-gray-500 uppercase">GVPIHLR SPRINT</div>
+            </div>
+            <div class="px-4 py-2 rounded-xl bg-black/60 border border-gray-800 text-center">
+              <div class="font-rajdhani font-bold text-2xl text-emerald-400">543-PT</div>
+              <div class="font-mono text-[9px] text-gray-500 uppercase">30+ FPS HOLISTIC</div>
+            </div>
+            <div class="px-4 py-2 rounded-xl bg-black/60 border border-gray-800 text-center">
+              <div class="font-rajdhani font-bold text-2xl text-f1red">48-BONE</div>
+              <div class="font-mono text-[9px] text-gray-500 uppercase">3D SIGNER RIG</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Featured Sprint Card: DhwaniDrishti + Interactive 3-Pillar Sandbox (8 cols) -->
+          <div class="lg:col-span-8 smoked-card p-6 sm:p-7 rounded-2xl border border-amber-600/40 relative">
+            <div class="absolute -top-[1px] -left-[1px] right-[50%] h-[2px] bg-gradient-to-r from-amber-400 via-white to-transparent pointer-events-none"></div>
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-gray-800">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-amberGlow animate-pulse"></span>
+                <span class="font-mono text-xs text-amber-400 uppercase font-semibold">GVPIHLR 24H OVERNIGHT SPRINT // NEP 2020</span>
+              </div>
+              <span class="font-mono text-xs bg-amber-950/80 text-amber-300 border border-amber-700/60 px-3 py-0.5 rounded font-bold">
+                TOP 10 FINALIST
+              </span>
+            </div>
+            <div class="space-y-2 mb-5">
+              <h3 class="font-rajdhani text-3xl sm:text-4xl font-bold text-white uppercase">
+                DhwaniDrishti <span class="text-lg font-mono text-gray-400">(ध्वनिदृष्टि • ధ్వనిదृष्टि)</span>
+              </h3>
+              <p class="font-sans text-sm text-gray-300 leading-relaxed">
+                Lightweight, real-time, bi-directional <strong class="text-white">Indian Sign Language (ISL)</strong> translation and interactive <strong class="text-amber-300">STEM tutoring platform</strong> engineered for inclusive classrooms under India's NEP 2020 accessibility mandate. Runs 100% on-device in standard browsers alongside a zero-cloud-GPU FastAPI backend.
+              </p>
+            </div>
+
+            <!-- Interactive 3-Pillar Switcher inside Hackathons View -->
+            <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-black/70 border border-gray-800 mb-4">
+              <button
+                type="button"
+                id="pillarBtn-lecturecast"
+                onclick="switchDhwaniPillar('lecturecast')"
+                class="py-2 px-2 rounded-lg font-rajdhani font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 bg-red-600/25 border border-red-500/70 text-white cursor-pointer"
+              >
+                <i class="w-3.5 h-3.5 text-f1red" data-lucide="sparkles"></i>
+                <span>1. LectureCast</span>
+              </button>
+              <button
+                type="button"
+                id="pillarBtn-stemcoach"
+                onclick="switchDhwaniPillar('stemcoach')"
+                class="py-2 px-2 rounded-lg font-rajdhani font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 text-gray-400 hover:text-white border border-transparent cursor-pointer"
+              >
+                <i class="w-3.5 h-3.5 text-amberGlow" data-lucide="activity"></i>
+                <span>2. STEM Coach (DTW)</span>
+              </button>
+              <button
+                type="button"
+                id="pillarBtn-doubtdesk"
+                onclick="switchDhwaniPillar('doubtdesk')"
+                class="py-2 px-2 rounded-lg font-rajdhani font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 text-gray-400 hover:text-white border border-transparent cursor-pointer"
+              >
+                <i class="w-3.5 h-3.5 text-emerald-400" data-lucide="eye"></i>
+                <span>3. DoubtDesk (543-Pt)</span>
+              </button>
+            </div>
+
+            <!-- PILLAR 1: LECTURECAST (SVO -> ISL SOV + 48-BONE AVATAR) -->
+            <div id="pillarPanel-lecturecast" class="space-y-3 mb-5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-1">
+                  <span class="font-mono text-[9px] text-gray-500 uppercase mr-1">LANG:</span>
+                  <button type="button" id="langBtn-en-IN" onclick="setLectureLang('en-IN')" class="px-2 py-0.5 rounded font-mono text-[10px] border bg-red-950/80 border-red-600 text-white cursor-pointer">EN-IN</button>
+                  <button type="button" id="langBtn-te-IN" onclick="setLectureLang('te-IN')" class="px-2 py-0.5 rounded font-mono text-[10px] border bg-black/50 border-gray-800 text-gray-400 hover:text-white cursor-pointer">TE-IN (తెలుగు)</button>
+                  <button type="button" id="langBtn-hi-IN" onclick="setLectureLang('hi-IN')" class="px-2 py-0.5 rounded font-mono text-[10px] border bg-black/50 border-gray-800 text-gray-400 hover:text-white cursor-pointer">HI-IN (हिन्दी)</button>
+                </div>
+                <div class="flex items-center gap-1">
+                  <button type="button" onclick="loadSampleSentence(0)" class="px-2 py-0.5 rounded bg-gray-900 hover:bg-gray-800 border border-gray-700 font-mono text-[9px] text-amber-300 cursor-pointer">Ex 1</button>
+                  <button type="button" onclick="loadSampleSentence(1)" class="px-2 py-0.5 rounded bg-gray-900 hover:bg-gray-800 border border-gray-700 font-mono text-[9px] text-amber-300 cursor-pointer">Ex 2</button>
+                  <button type="button" onclick="loadSampleSentence(2)" class="px-2 py-0.5 rounded bg-gray-900 hover:bg-gray-800 border border-gray-700 font-mono text-[9px] text-amber-300 cursor-pointer">Ex 3</button>
+                </div>
+              </div>
+
+              <div class="relative">
+                <input
+                  id="lecturecastInput"
+                  type="text"
+                  value="Tomorrow the teacher will explain photosynthesis and evaporation"
+                  oninput="updateLectureCastUI()"
+                  placeholder="Enter classroom sentence in English, Telugu, or Hindi..."
+                  class="w-full px-3.5 py-2 rounded-xl bg-black/80 border border-gray-700 focus:border-f1red font-mono text-xs text-white outline-none pr-24"
+                />
+                <span class="absolute right-2.5 top-2 px-2 py-0.5 rounded bg-red-950/90 border border-red-700/70 font-mono text-[9px] text-red-300">
+                  NIOS 230 SOV
+                </span>
+              </div>
+
+              <div class="p-3 rounded-xl bg-black/60 border border-gray-800/90 space-y-2">
+                <div class="flex items-center justify-between font-mono text-[10px]">
+                  <span class="text-gray-400">ISL TOPOLOGICAL GLOSS RIBBON:</span>
+                  <span id="nmmStateBadge" class="text-amber-400">NMM: NEUTRAL | HEAD: 0°</span>
+                </div>
+                <div id="islGlossRibbon" class="flex flex-wrap gap-1.5"></div>
+                <div id="islRuleNotes" class="text-[10px] font-mono text-gray-400 pt-1 border-t border-gray-800/80 flex flex-wrap gap-x-3 gap-y-1"></div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center bg-black/70 p-3 rounded-xl border border-gray-800">
+                <div class="sm:col-span-7 flex flex-col items-center">
+                  <canvas id="islAvatarCanvas" width="280" height="175" class="w-full max-w-[280px] h-[175px] rounded-lg bg-black/90 border border-gray-800"></canvas>
+                </div>
+                <div class="sm:col-span-5 space-y-2 font-mono text-[10px]">
+                  <div class="text-gray-400 uppercase">3D SIGNER PERSONA:</div>
+                  <div class="flex flex-col gap-1">
+                    <button type="button" id="personaBtn-Aarav" onclick="setAvatarPersona('Aarav')" class="text-left px-2.5 py-1 rounded border bg-red-950/60 border-red-600 text-white cursor-pointer">● Aarav (NIOS Standard)</button>
+                    <button type="button" id="personaBtn-Meera" onclick="setAvatarPersona('Meera')" class="text-left px-2.5 py-1 rounded border bg-black/50 border-gray-800 text-gray-400 hover:text-white cursor-pointer">○ Prof. Meera (STEM Lab)</button>
+                    <button type="button" id="personaBtn-Sheru" onclick="setAvatarPersona('Sheru')" class="text-left px-2.5 py-1 rounded border bg-black/50 border-gray-800 text-gray-400 hover:text-white cursor-pointer">○ Sheru Mascot (K-12)</button>
+                  </div>
+                  <div class="pt-1 flex items-center justify-between text-[10px] text-gray-400">
+                    <span>SPATIAL LOCUS:</span>
+                    <span id="spatialLocusReadout" class="text-emerald-400 font-bold">CENTER (0°)</span>
+                  </div>
+                  <button
+                    type="button"
+                    id="playPauseRigBtn"
+                    onclick="toggleAvatarPlayback()"
+                    class="w-full py-1.5 px-2.5 rounded bg-red-600/20 hover:bg-red-600/30 border border-red-500/50 text-red-300 font-bold uppercase tracking-wider text-center cursor-pointer"
+                  >
+                    PAUSE 48-BONE RIG
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- PILLAR 2: ISL-STEM COACH (SAKOE-CHIBA DTW + VECTOR COSINE) -->
+            <div id="pillarPanel-stemcoach" class="hidden space-y-3 mb-5">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] text-amber-400 uppercase font-semibold">SELECT STEM BENCHMARK SIGN (backend/dtw_evaluator.py):</span>
+                <span class="font-mono text-[10px] text-emerald-400">SAKOE-CHIBA BAND r=8</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5" id="stemTermSelector">
+                <button type="button" onclick="selectStemBenchmark(0)" id="stemBtn-0" class="px-2.5 py-1 rounded-lg font-mono text-[10px] border bg-amber-950/70 border-amber-500 text-white cursor-pointer">Algorithm</button>
+                <button type="button" onclick="selectStemBenchmark(1)" id="stemBtn-1" class="px-2.5 py-1 rounded-lg font-mono text-[10px] border bg-black/60 border-gray-800 text-gray-400 hover:text-white cursor-pointer">Derivative</button>
+                <button type="button" onclick="selectStemBenchmark(2)" id="stemBtn-2" class="px-2.5 py-1 rounded-lg font-mono text-[10px] border bg-black/60 border-gray-800 text-gray-400 hover:text-white cursor-pointer">Photosynthesis</button>
+                <button type="button" onclick="selectStemBenchmark(3)" id="stemBtn-3" class="px-2.5 py-1 rounded-lg font-mono text-[10px] border bg-black/60 border-gray-800 text-gray-400 hover:text-white cursor-pointer">Momentum</button>
+                <button type="button" onclick="selectStemBenchmark(4)" id="stemBtn-4" class="px-2.5 py-1 rounded-lg font-mono text-[10px] border bg-black/60 border-gray-800 text-gray-400 hover:text-white cursor-pointer">Recursion</button>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-black/65 border border-gray-800 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div id="stemTermTitle" class="font-rajdhani text-lg font-bold text-white uppercase">ALGORITHM (అల్గారిథమ్ • एल्गोरिदम)</div>
+                    <div id="stemTermCategory" class="font-mono text-[10px] text-amber-400">CATEGORY: COMPUTER SCIENCE // STEP-BY-STEP SEQUENCE</div>
+                  </div>
+                  <div class="text-right font-mono">
+                    <div class="text-[9px] text-gray-400">OVERALL SIMILARITY</div>
+                    <div id="stemDtwScore" class="text-xl font-bold text-emerald-400">94.8%</div>
+                  </div>
+                </div>
+
+                <canvas id="stemDtwCanvas" width="380" height="80" class="w-full h-[80px] rounded bg-black/90 border border-gray-800"></canvas>
+
+                <div id="stemJointFeedback" class="space-y-1.5 font-mono text-[10px]"></div>
+
+                <div id="stemCorrectionHint" class="p-2 rounded bg-emerald-950/40 border border-emerald-700/50 font-sans text-xs text-emerald-200"></div>
+              </div>
+            </div>
+
+            <!-- PILLAR 3: DOUBTDESK (543-LANDMARK HOLISTIC + 1D-CNN & BI-LSTM) -->
+            <div id="pillarPanel-doubtdesk" class="hidden space-y-3 mb-5">
+              <div class="flex items-center justify-between font-mono text-[10px]">
+                <span class="text-emerald-400 font-semibold uppercase">MEDIAPIPE HOLISTIC STREAM (33 POSE + 468 FACE + 42 HANDS)</span>
+                <span class="text-white bg-emerald-950/80 border border-emerald-700 px-2 py-0.5 rounded">30+ FPS WASM</span>
+              </div>
+
+              <div class="flex flex-wrap gap-1.5">
+                <button type="button" onclick="selectDoubtSequence(0)" id="doubtBtn-0" class="px-2.5 py-1 rounded-lg font-mono text-[10px] border bg-emerald-950/70 border-emerald-500 text-white cursor-pointer">Query #1: Derivative</button>
+                <button type="button" onclick="selectDoubtSequence(1)" id="doubtBtn-1" class="px-2.5 py-1 rounded-lg font-mono text-[10px] border bg-black/60 border-gray-800 text-gray-400 hover:text-white cursor-pointer">Query #2: Photosynthesis</button>
+                <button type="button" onclick="selectDoubtSequence(2)" id="doubtBtn-2" class="px-2.5 py-1 rounded-lg font-mono text-[10px] border bg-black/60 border-gray-800 text-gray-400 hover:text-white cursor-pointer">Query #3: Recursion</button>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-black/65 border border-gray-800 space-y-2.5 font-mono text-xs">
+                <canvas id="doubtHolisticCanvas" width="380" height="82" class="w-full h-[82px] rounded bg-black/90 border border-gray-800"></canvas>
+                <div>
+                  <span class="text-[10px] text-gray-400 uppercase">DETECTED ISL GLOSS SEQUENCE (1D-CNN + Bi-LSTM):</span>
+                  <div id="doubtGlossOutput" class="text-amber-300 font-bold mt-0.5">[POINT-BOARD] + [FUNCTION] + [SLOPE-TANGENT] + [WHY-Q]</div>
+                </div>
+                <div>
+                  <span class="text-[10px] text-gray-400 uppercase">RECONSTRUCTED SPOKEN CLASSROOM QUESTION:</span>
+                  <div id="doubtEnglishOutput" class="font-sans text-sm text-white font-medium mt-0.5">"Sir, why does the derivative equal the slope of the tangent line?"</div>
+                </div>
+                <div class="flex items-center justify-between pt-1">
+                  <span id="doubtConfidenceBadge" class="text-[10px] text-emerald-400">CONFIDENCE: 96.4% | Z-DEPTH NORMALIZED</span>
+                  <button
+                    type="button"
+                    onclick="speakDoubtDesk()"
+                    class="px-3 py-1 rounded-lg bg-emerald-600/25 hover:bg-emerald-600/40 border border-emerald-500/60 text-emerald-200 font-rajdhani font-bold text-xs uppercase flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <i class="w-3.5 h-3.5" data-lucide="volume-2"></i>
+                    <span>Speak Aloud (TTS)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- REST API Endpoints Table from Repo -->
+            <div class="mb-6 p-4 rounded-xl bg-black/60 border border-gray-800 font-mono text-xs space-y-2">
+              <div class="text-amber-400 font-bold uppercase text-[11px]">FASTAPI BACKEND ENDPOINTS (backend/main.py)</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                <div class="p-2 rounded bg-black/80 border border-gray-800"><span class="text-f1red font-bold">POST</span> /api/lecturecast/parse</div>
+                <div class="p-2 rounded bg-black/80 border border-gray-800"><span class="text-f1red font-bold">POST</span> /api/doubtdesk/classify</div>
+                <div class="p-2 rounded bg-black/80 border border-gray-800"><span class="text-emerald-400 font-bold">GET</span> /api/stem-coach/terms</div>
+                <div class="p-2 rounded bg-black/80 border border-gray-800"><span class="text-f1red font-bold">POST</span> /api/stem-coach/evaluate</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-800">
+              <div class="flex items-center gap-2 font-mono text-[11px] text-gray-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span>ORGANIZED AT: GVP COLLEGE OF ENGINEERING</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2.5">
+                <a
+                  class="px-4 py-2.5 rounded-xl bg-red-600/20 hover:bg-red-600/30 text-white border border-f1red font-rajdhani font-bold text-sm tracking-wider uppercase transition-all flex items-center gap-2"
+                  href="https://dhwani-drishti.vercel.app"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <i class="w-4 h-4 text-f1red" data-lucide="globe"></i>
+                  <span>Live Deployment</span>
+                </a>
+                <a
+                  class="px-5 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/60 font-rajdhani font-bold text-sm tracking-wider uppercase transition-all flex items-center gap-2"
+                  href="https://github.com/revanthbandaru54-arch/DhwaniDrishti"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                  <span>Open DhwaniDrishti Repo</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pit-Wall Telemetry Sidebar (4 cols) -->
+          <div class="lg:col-span-4 space-y-5">
+            <div class="smoked-card p-6 rounded-2xl border border-gray-700/50">
+              <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-800">
+                <span class="font-mono text-xs text-gray-400 font-semibold">PIT-WALL TELEMETRY</span>
+                <span class="text-[10px] font-mono text-emerald-400">READY</span>
+              </div>
+              <div class="space-y-2 text-xs font-mono text-gray-300">
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Hackathons Participated:</span>
+                  <span class="text-white font-bold">1 Major Hackathon</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Sprint Duration:</span>
+                  <span class="text-white font-bold">24 Hours</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Team Role:</span>
+                  <span class="text-amber-400 font-bold">Systems &amp; AI Developer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ==================== VIEW 4: ABOUT TELEMETRY VIEW ==================== -->
+    <main class="view-section view-hidden py-8" id="view-about">
+      <div class="max-w-6xl mx-auto space-y-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-800 pb-5 gap-4">
+          <div class="flex items-center gap-4">
+            <img
+              src="revanth.jpg"
+              alt="Bandaru Revanth"
+              class="w-20 h-20 rounded-2xl border-2 border-f1red shadow-[0_0_22px_rgba(230,0,0,0.45)] object-cover object-[center_42%]"
+            />
+            <div>
+              <div class="flex items-center gap-2 font-mono text-xs text-f1red uppercase tracking-widest mb-1">
+                <span class="w-2 h-2 rounded-full bg-f1red animate-ping"></span>
+                PILOT PROFILE &amp; SYSTEM ARCHITECT TELEMETRY
+              </div>
+              <h2 class="font-rajdhani text-4xl sm:text-5xl font-bold uppercase text-white tracking-wide">
+                BANDARU <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-f1red">REVANTH</span>
+              </h2>
+              <p class="font-sans text-sm text-gray-400 mt-1">Computer Science Student at GVP College of Engineering (DEPT: CSE), Visakhapatnam.</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <a
+              href="https://www.linkedin.com/in/revanth-bandaru-470876432/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-mono text-xs px-3.5 py-2 rounded-xl bg-red-600/20 hover:bg-red-600/30 border border-f1red text-white flex items-center gap-2 transition-all"
+            >
+              <svg class="w-4 h-4 text-f1red shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+              <span>CONNECT ON LINKEDIN</span>
+              <i class="w-3.5 h-3.5" data-lucide="arrow-up-right"></i>
+            </a>
+            <div class="font-mono text-xs px-3 py-2 rounded-xl bg-black/60 border border-gray-800 text-gray-300 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-f1red"></span>
+              <span>VISAKHAPATNAM, AP, INDIA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Left: Bio & Philosophy (7 cols) -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="smoked-card p-6 sm:p-7 rounded-2xl border border-gray-700/50 space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-gray-800">
+                <span class="font-rajdhani text-xl font-bold text-white uppercase flex items-center gap-2">
+                  <i class="w-5 h-5 text-f1red" data-lucide="user-check"></i>
+                  Engineering Philosophy
+                </span>
+                <span class="font-mono text-[11px] text-gray-400">CHASSIS SPEC // 01</span>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-5 items-center sm:items-start">
+                <div class="w-36 sm:w-40 shrink-0 rounded-2xl overflow-hidden border border-red-500/50 bg-black/60 shadow-[0_0_25px_rgba(230,0,0,0.25)]">
+                  <img
+                    src="revanth.jpg"
+                    alt="Bandaru Revanth Portrait"
+                    class="w-full h-48 object-cover object-[center_45%]"
+                  />
+                  <div class="px-2.5 py-1.5 bg-black/90 border-t border-gray-800 font-mono text-[9px] text-center text-gray-300">
+                    REVANTH // GVPCE CSE
+                  </div>
+                </div>
+                <div class="space-y-3">
+                  <p class="font-sans text-gray-300 text-sm leading-relaxed">
+                    I am a first-year Computer Science Engineering student driven by high-performance systems and low-level control. Rather than relying blindly on black-box external cloud APIs, my focus is on running <strong class="text-white">local-first AI pipelines</strong>, optimizing inference speed, and building rock-solid CLI tooling on Linux.
+                  </p>
+                  <p class="font-sans text-gray-300 text-sm leading-relaxed">
+                    Whether engineering a real-time bi-directional Indian Sign Language (ISL) &amp; STEM coaching platform (<strong class="text-amber-400">DhwaniDrishti</strong>) with 543-landmark holistic vision and 48-bone 3D skeletal synthesis, or building an automated AI invoicing engine for wholesale distributors (<strong class="text-red-400">DistroAI</strong>), I approach software engineering with Formula 1 precision: minimize latency, trim unnecessary overhead, and design deterministic workflows.
+                  </p>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3">
+                <div class="p-3 bg-black/60 rounded-xl border border-gray-800 text-center">
+                  <div class="font-mono text-[10px] text-gray-500 uppercase">DEGREE</div>
+                  <div class="font-rajdhani font-bold text-white text-base">B.Tech CSE</div>
+                  <div class="font-mono text-[9px] text-gray-400">DEPT: CSE</div>
+                </div>
+                <div class="p-3 bg-black/60 rounded-xl border border-gray-800 text-center">
+                  <div class="font-mono text-[10px] text-gray-500 uppercase">INSTITUTION</div>
+                  <div class="font-rajdhani font-bold text-white text-base">GVPCE</div>
+                  <div class="font-mono text-[9px] text-gray-400">Visakhapatnam</div>
+                </div>
+                <div class="p-3 bg-black/60 rounded-xl border border-gray-800 text-center">
+                  <div class="font-mono text-[10px] text-gray-500 uppercase">BATCH</div>
+                  <div class="font-rajdhani font-bold text-red-400 text-base">2k26 - 2k30</div>
+                  <div class="font-mono text-[9px] text-gray-400">Active Academic</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="smoked-card p-6 sm:p-7 rounded-2xl border border-gray-700/50">
+              <div class="font-rajdhani text-lg font-bold text-white uppercase mb-4 flex items-center gap-2">
+                <i class="w-5 h-5 text-amberGlow" data-lucide="milestone"></i>
+                Milestone Telemetry
+              </div>
+              <div class="space-y-4 border-l-2 border-gray-800 ml-2 pl-4">
+                <div class="relative">
+                  <span class="absolute -left-[23px] top-1.5 w-3 h-3 rounded-full bg-f1red border-2 border-charcoal"></span>
+                  <div class="font-mono text-[11px] text-red-400 font-bold">2k26 - PRESENT</div>
+                  <div class="font-rajdhani font-bold text-white text-base">GVP College of Engineering — B.Tech in CSE</div>
+                  <div class="font-sans text-xs text-gray-400">Core study in Computer Science Engineering (DEPT: CSE), Data Structures, Computer Architecture, and Discrete Math.</div>
+                </div>
+                <div class="relative">
+                  <span class="absolute -left-[23px] top-1.5 w-3 h-3 rounded-full bg-amberGlow border-2 border-charcoal"></span>
+                  <div class="font-mono text-[11px] text-amber-400 font-bold">2k26 (OVERNIGHT SPRINT)</div>
+                  <div class="font-rajdhani font-bold text-white text-base">Top 10 Finalist — GVPIHLR Hackathon (DhwaniDrishti)</div>
+                  <div class="font-sans text-xs text-gray-400">Designed and deployed DhwaniDrishti bi-directional Indian Sign Language (ISL) translation &amp; STEM Coach platform.</div>
+                </div>
+                <div class="relative">
+                  <span class="absolute -left-[23px] top-1.5 w-3 h-3 rounded-full bg-gray-500 border-2 border-charcoal"></span>
+                  <div class="font-mono text-[11px] text-gray-400 font-bold">CONTINUOUS DEVELOPMENT</div>
+                  <div class="font-rajdhani font-bold text-white text-base">Local AI Orchestration &amp; DistroAI R&amp;D</div>
+                  <div class="font-sans text-xs text-gray-400">Building edge voice-to-order pipeline architecture for wholesale supply-chain logistics.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Interactive Terminal Emulator Widget (5 cols) -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="smoked-card rounded-2xl border border-gray-700/60 overflow-hidden shadow-2xl">
+              <div class="bg-black/90 px-4 py-3 border-b border-gray-800 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <div class="w-3 h-3 rounded-full bg-red-600/80"></div>
+                  <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                  <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                  <span class="font-mono text-[11px] text-gray-400 ml-2">revanth@archlinux: ~</span>
+                </div>
+                <span class="font-mono text-[10px] text-gray-500 uppercase">zsh 5.9</span>
+              </div>
+
+              <!-- Quick Interactive Terminal Commands -->
+              <div class="bg-black/95 px-4 py-2 border-b border-gray-800/80 flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
+                <span class="text-gray-500">RUN:</span>
+                <button type="button" id="termBtn-stack" onclick="runTerminalCmd('stack')" class="px-2 py-0.5 rounded border bg-red-950/80 text-red-300 border-red-600 cursor-pointer">--stack</button>
+                <button type="button" id="termBtn-socials" onclick="runTerminalCmd('socials')" class="px-2 py-0.5 rounded border bg-black text-gray-400 border-gray-800 hover:text-white cursor-pointer">--socials</button>
+              </div>
+
+              <div class="p-4 bg-black/80 font-mono text-xs space-y-3 min-h-[340px] text-gray-300">
+                <div>
+                  <span class="text-f1red font-bold">➜</span>
+                  <span class="text-emerald-400 font-bold">~</span>
+                  <span class="text-white">$ whoami</span>
+                  <p class="text-gray-400 mt-1 pl-4">bandaru_revanth // Software &amp; Systems Engineer</p>
+                </div>
+                <div>
+                  <span class="text-f1red font-bold">➜</span>
+                  <span class="text-emerald-400 font-bold">~</span>
+                  <span class="text-white">$ revanth --department</span>
+                  <div class="text-gray-400 mt-1 pl-4 space-y-0.5">
+                    <p><span class="text-red-400">institution:</span> GVP College of Engineering</p>
+                    <p><span class="text-red-400">department:</span> DEPT: CSE (1st Year Undergrad)</p>
+                    <p><span class="text-red-400">location:</span> Visakhapatnam, India</p>
+                  </div>
+                </div>
+                <div>
+                  <span class="text-f1red font-bold">➜</span>
+                  <span class="text-emerald-400 font-bold">~</span>
+                  <span id="termActiveCmd" class="text-white">$ revanth --stack</span>
+                  <div id="termDynamicOutput" class="text-gray-400 mt-1 pl-4 space-y-0.5">
+                    <p>[+] Core: C++, Python 3.11+, Linux Kernel/CLI</p>
+                    <p>[+] AI: MediaPipe WASM, Whisper, Local LLMs (Ollama/vLLM)</p>
+                    <p>[+] Web/3D: FastAPI, Three.js 48-Bone Rig, WebSockets</p>
+                  </div>
+                </div>
+                <div class="pt-2">
+                  <span class="text-f1red font-bold">➜</span>
+                  <span class="text-emerald-400 font-bold">~</span>
+                  <span class="text-white animate-pulse">▋</span>
+                </div>
+              </div>
+
+              <div class="p-3 bg-black/95 border-t border-gray-800 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+                <a class="text-red-400 hover:text-white flex items-center gap-1 transition-colors" href="https://github.com/revanthbandaru54-arch" rel="noopener noreferrer" target="_blank">
+                  <span>GitHub</span>
+                  <i class="w-3.5 h-3.5" data-lucide="arrow-up-right"></i>
+                </a>
+                <a class="text-amber-400 hover:text-white flex items-center gap-1 transition-colors" href="https://leetcode.com/u/revanthbandaru54/" rel="noopener noreferrer" target="_blank">
+                  <span>LeetCode</span>
+                  <i class="w-3.5 h-3.5" data-lucide="arrow-up-right"></i>
+                </a>
+                <a class="text-emerald-400 hover:text-white flex items-center gap-1 transition-colors" href="https://www.codechef.com/users/husk_calm_81" rel="noopener noreferrer" target="_blank">
+                  <span>CodeChef</span>
+                  <i class="w-3.5 h-3.5" data-lucide="arrow-up-right"></i>
+                </a>
+                <a class="text-gray-300 hover:text-white flex items-center gap-1 transition-colors" href="https://www.linkedin.com/in/revanth-bandaru-470876432/" rel="noopener noreferrer" target="_blank">
+                  <span>LinkedIn</span>
+                  <i class="w-3.5 h-3.5" data-lucide="arrow-up-right"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-gradient-to-r from-red-950/40 to-black/60 border border-red-900/40 flex items-center justify-between">
+              <div>
+                <div class="font-rajdhani font-bold text-white text-lg uppercase">Initiate Direct Packet</div>
+                <div class="font-sans text-xs text-gray-400">Ready to discuss local AI or systems engineering?</div>
+              </div>
+              <button class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-rajdhani font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer" onclick="openContactModal()">
+                CONTACT ME
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ==================== TELEMETRY TICKER & METADATA FOOTER ==================== -->
+    <footer class="w-full mt-8 pt-6 pb-4 border-t border-gray-800/70 flex flex-col xl:flex-row items-center justify-between gap-y-3 gap-x-6 font-mono text-[11px] text-gray-400">
+      <div class="flex flex-wrap items-center justify-center xl:justify-start gap-x-3 gap-y-1.5">
+        <span class="flex items-center gap-1.5 text-gray-300 whitespace-nowrap">
+          <span class="w-1.5 h-1.5 rounded-full bg-f1red"></span>
+          BANDARU REVANTH
+        </span>
+        <span class="text-gray-600">|</span>
+        <span class="whitespace-nowrap">GVP COLLEGE OF ENGINEERING</span>
+        <span class="text-gray-600">|</span>
+        <span class="text-gray-400 whitespace-nowrap">DEPT: CSE</span>
+      </div>
+
+      <div class="hidden lg:flex items-center gap-3 bg-black/60 px-4 py-1.5 rounded-full border border-gray-800 shrink-0">
+        <span class="text-gray-400">GEAR</span>
+        <span class="text-f1red font-bold text-sm whitespace-nowrap" id="gearDisplayFooter">GEAR 1 &gt; ACTIVE</span>
+        <span class="gear-tick w-14 h-2 inline-block"></span>
+        <span class="text-white whitespace-nowrap">TURBO: ACTIVE</span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center xl:justify-end gap-x-3 gap-y-1.5">
+        <a class="hover:text-f1red transition-colors flex items-center gap-1.5 whitespace-nowrap" href="https://github.com/revanthbandaru54-arch" rel="noopener noreferrer" target="_blank">
+          <svg class="w-3.5 h-3.5 text-red-500 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+          </svg>
+          <span>GITHUB PROFILE</span>
+        </a>
+        <span class="text-gray-600">/</span>
+        <a class="hover:text-amber-400 transition-colors flex items-center gap-1.5 whitespace-nowrap" href="https://leetcode.com/u/revanthbandaru54/" rel="noopener noreferrer" target="_blank">
+          <i class="w-3.5 h-3.5 text-amber-400" data-lucide="code-2"></i>
+          <span>LEETCODE</span>
+        </a>
+        <span class="text-gray-600">/</span>
+        <a class="hover:text-emerald-400 transition-colors flex items-center gap-1.5 whitespace-nowrap" href="https://www.codechef.com/users/husk_calm_81" rel="noopener noreferrer" target="_blank">
+          <i class="w-3.5 h-3.5 text-emerald-400" data-lucide="terminal"></i>
+          <span>CODECHEF</span>
+        </a>
+        <span class="text-gray-600">/</span>
+        <a class="hover:text-amber-400 transition-colors flex items-center gap-1.5 whitespace-nowrap" href="https://www.linkedin.com/in/revanth-bandaru-470876432/" rel="noopener noreferrer" target="_blank">
+          <svg class="w-3.5 h-3.5 text-amberGlow shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+          </svg>
+          <span>LINKEDIN</span>
+        </a>
+        <span class="text-gray-600">/</span>
+        <span class="text-gray-400 whitespace-nowrap">© 2026 ALL TELEMETRY LOGGED</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==================== CONTACT ME MODAL / OVERLAY ==================== -->
+  <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4" id="contactModal">
+    <div class="smoked-card max-w-lg w-full p-6 sm:p-8 rounded-3xl border border-red-500/50 shadow-[0_0_50px_rgba(230,0,0,0.3)] relative">
+      <button class="absolute top-5 right-5 text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="closeContactModal()">
+        <i class="w-5 h-5" data-lucide="x"></i>
+      </button>
+
+      <div class="flex items-center gap-3.5 mb-4">
+        <img
+          src="revanth.jpg"
+          alt="Bandaru Revanth"
+          class="w-14 h-14 rounded-2xl border border-f1red object-cover object-[center_42%] shadow-[0_0_15px_rgba(230,0,0,0.35)] shrink-0"
+        />
+        <div>
+          <div class="flex items-center gap-2 mb-0.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-f1red animate-ping"></span>
+            <span class="font-mono text-xs text-red-400 uppercase font-semibold">DIRECT TELEMETRY TRANSMISSION // SECURE LINK</span>
+          </div>
+          <h3 class="font-rajdhani text-3xl font-bold uppercase text-white tracking-wide">
+            CONTACT <span class="text-f1red">BANDARU REVANTH</span>
+          </h3>
+        </div>
+      </div>
+      <p class="font-sans text-xs text-gray-400 mt-1 mb-5">
+        Send an encrypted telemetry ping directly or connect via LinkedIn and GitHub.
+      </p>
+
+      <div class="space-y-3 mb-6 font-mono text-xs">
+        <div class="p-3 bg-black/60 rounded-xl border border-gray-800 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-gray-300">
+            <i class="w-4 h-4 text-f1red" data-lucide="mail"></i>
+            <span>Direct Channel:</span>
+          </div>
+          <a class="text-white hover:text-red-400 font-bold transition-colors" href="mailto:revanthbandaru54@gmail.com">
+            Bandaru Revanth [Mail]
+          </a>
+        </div>
+        <div class="p-3 bg-black/60 rounded-xl border border-gray-800 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-gray-300">
+            <svg class="w-4 h-4 text-amberGlow shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+            </svg>
+            <span>LinkedIn Profile:</span>
+          </div>
+          <a class="text-white hover:text-amber-400 font-bold transition-colors" href="https://www.linkedin.com/in/revanth-bandaru-470876432/" rel="noopener noreferrer" target="_blank">
+            revanth-bandaru-470876432
+          </a>
+        </div>
+        <div class="p-3 bg-black/60 rounded-xl border border-gray-800 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-gray-300">
+            <svg class="w-4 h-4 text-f1red shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+            </svg>
+            <span>GitHub Handle:</span>
+          </div>
+          <a class="text-white hover:text-red-400 font-bold transition-colors" href="https://github.com/revanthbandaru54-arch" rel="noopener noreferrer" target="_blank">
+            revanthbandaru54-arch
+          </a>
+        </div>
+        <div class="p-3 bg-black/60 rounded-xl border border-gray-800 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-gray-300">
+            <i class="w-4 h-4 text-amber-400" data-lucide="code-2"></i>
+            <span>LeetCode Profile:</span>
+          </div>
+          <a class="text-white hover:text-amber-400 font-bold transition-colors" href="https://leetcode.com/u/revanthbandaru54/" rel="noopener noreferrer" target="_blank">
+            u/revanthbandaru54
+          </a>
+        </div>
+        <div class="p-3 bg-black/60 rounded-xl border border-gray-800 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-gray-300">
+            <i class="w-4 h-4 text-emerald-400" data-lucide="terminal"></i>
+            <span>CodeChef Handle:</span>
+          </div>
+          <a class="text-white hover:text-emerald-400 font-bold transition-colors" href="https://www.codechef.com/users/husk_calm_81" rel="noopener noreferrer" target="_blank">
+            husk_calm_81
+          </a>
+        </div>
+        <div class="p-3 bg-black/60 rounded-xl border border-gray-800 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-gray-300">
+            <i class="w-4 h-4 text-emerald-400" data-lucide="shield"></i>
+            <span>Department:</span>
+          </div>
+          <span class="text-gray-300 font-bold">DEPT: CSE // GVPCE</span>
+        </div>
+      </div>
+
+      <form class="space-y-3" onsubmit="handlePacketTransmit(event)">
+        <div>
+          <label class="block font-mono text-[10px] text-gray-400 uppercase mb-1">Your Call-Sign / Email</label>
+          <input class="w-full px-3.5 py-2.5 rounded-xl bg-black/70 border border-gray-800 focus:border-red-500 focus:ring-1 focus:ring-red-500 font-mono text-xs text-white placeholder-gray-600 outline-none" id="senderCallsign" placeholder="e.g. pilot@domain.com" required="" type="text" />
+        </div>
+        <div>
+          <label class="block font-mono text-[10px] text-gray-400 uppercase mb-1">Message Telemetry Payload</label>
+          <textarea class="w-full px-3.5 py-2.5 rounded-xl bg-black/70 border border-gray-800 focus:border-red-500 focus:ring-1 focus:ring-red-500 font-mono text-xs text-white placeholder-gray-600 outline-none" id="senderPayload" placeholder="State your inquiry or collaboration proposal..." required="" rows="3"></textarea>
+        </div>
+        <div class="hidden p-3 rounded-xl bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs flex items-center gap-2" id="transmitSuccessAlert">
+          <i class="w-4 h-4 text-emerald-400 shrink-0" data-lucide="check"></i>
+          <span>PACKET TRANSMITTED TO REVANTH! OPENING MAIL CLIENT...</span>
+        </div>
+        <div class="flex items-center gap-3 pt-2">
+          <button class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-800 text-white font-rajdhani font-bold text-sm tracking-wider uppercase shadow-[0_0_20px_rgba(230,0,0,0.45)] transition-all flex items-center justify-center gap-2 cursor-pointer" type="submit">
+            <i class="w-4 h-4 text-white" data-lucide="send"></i>
+            <span>TRANSMIT PACKET</span>
+          </button>
+          <button class="py-3 px-4 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 font-rajdhani font-bold text-sm tracking-wider uppercase border border-gray-700 transition-all cursor-pointer" onclick="closeContactModal()" type="button">
+            CLOSE [ESC]
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Website Logic & DhwaniDrishti Engine -->
+  <script src="app.js"></script>
+</body>
+</html>
