@@ -1,0 +1,156 @@
+/* ==========================================================================
+   Bandaru Revanth — F1 Pit-Lane Telemetry Website Styles (Stitch Aesthetic)
+   Palette: Carbon Charcoal (#0A0A0A), Smoked Titanium (#1C1C1E),
+            F1 Crimson (#E60000), Telemetry Amber (#FF9900), Emerald (#10B981)
+   ========================================================================== */
+
+.carbon-bg {
+  background-color: #0A0A0A;
+  background-image: 
+    radial-gradient(ellipse at 80% 20%, rgba(230, 0, 0, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(30, 30, 36, 0.6) 0%, transparent 60%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(255, 255, 255, 0.03) 25%, #0A0A0A 25%);
+  background-size: 100% 100%, 100% 100%, 16px 16px, 16px 16px, 16px 16px, 16px 16px;
+  background-position: 0 0, 0 0, 0 0, 8px 0, 8px -8px, 0px 8px;
+}
+
+/* Subtle speed line panning grid */
+.speed-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: gridPan 22s linear infinite;
+}
+
+@keyframes gridPan {
+  from { transform: translateY(0); }
+  to { transform: translateY(48px); }
+}
+
+/* Machined Metal & Smoked Glass styling */
+.smoked-glass {
+  background: rgba(10, 10, 12, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 1px 1px 0px 0px rgba(255, 255, 255, 0.18),
+    inset -1px -1px 0px 0px rgba(0, 0, 0, 0.6),
+    0 20px 40px -15px rgba(0, 0, 0, 0.85);
+}
+
+.smoked-card {
+  background: linear-gradient(135deg, rgba(28, 28, 30, 0.85) 0%, rgba(14, 14, 16, 0.94) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    inset 1px 1px 1px 0px rgba(255, 255, 255, 0.22),
+    inset -1px -1px 1px 0px rgba(0, 0, 0, 0.8),
+    0 25px 50px -12px rgba(0, 0, 0, 0.95);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.smoked-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(230, 0, 0, 0.6);
+  box-shadow: 
+    inset 1px 1px 2px 0px rgba(255, 80, 80, 0.4),
+    0 25px 60px -10px rgba(230, 0, 0, 0.25),
+    0 0 30px rgba(230, 0, 0, 0.15);
+}
+
+/* Red Snapping Underline Animation */
+.nav-btn {
+  position: relative;
+}
+.nav-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 80%;
+  height: 2px;
+  background: #E60000;
+  box-shadow: 0 0 8px #FF1A1A;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
+  border-radius: 1px;
+}
+.nav-btn.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Gear indicator tick */
+.gear-tick {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.15) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+}
+
+/* Page View Transitions */
+.view-section {
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.view-section.view-hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+}
+.view-section.view-active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Interactive Tab Animations */
+.tab-panel {
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tab-panel.hidden-tab {
+  display: none;
+  opacity: 0;
+  transform: translateY(8px) scale(0.99);
+}
+.tab-panel.active-tab {
+  display: block;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Architecture diagram nodes styling */
+.arch-node {
+  background: rgba(14, 14, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+.arch-node:hover {
+  border-color: rgba(230, 0, 0, 0.6);
+  box-shadow: 0 0 15px rgba(230, 0, 0, 0.25);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a30;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E60000;
+}
+
